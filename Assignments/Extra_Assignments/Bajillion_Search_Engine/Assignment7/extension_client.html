@@ -35,7 +35,8 @@ These three pieces (HTML, JavaScript, and CSS) come together to make a nice, dyn
 			<input type="text" class="form-control" id="search" aria-describedby="search box">
 		</div>
 		<!-- The magnifying glass icon -->
-		<i class="searchIcon fa fa-search" onclick="search()"></i>
+		<i class="searchIcon fa fa-search" title="Search" onclick="search()" ><div class="tooltip">Search<span class="tooltiptext">Search</span></div></i>
+	
 	</div>
 	<!-- This is the thin grey line -->
 	<hr/>
@@ -165,8 +166,37 @@ These three pieces (HTML, JavaScript, and CSS) come together to make a nice, dyn
 	    color: #1A73E8;
 	    margin-top: 11px;
 	    margin-left: 10px;
+		cursor: pointer;
+		
 	}
 
+	.searchIcon:hover{
+		background-color: bisque;
+
+	}
+
+	.tooltip .tooltiptext {
+		visibility: hidden;
+		width: 120px;
+		background-color: black;
+		color: #fff;
+		text-align: center;
+		padding: 5px 0;
+		border-radius: 6px;
+
+		/*Placing tooltip at bottom*/
+		top: 100%;
+  		left: 50%;
+  		margin-left: -60px;
+
+		/* Position the tooltip text - see examples below! */
+		position: absolute;
+		z-index: 1;
+	}
+
+	.tooltip:hover .tooltiptext {
+		visibility: visible;
+	}
 	.result {
 		margin-top:10px;
 	}
