@@ -9,62 +9,44 @@ import os
 import sys
 import string
 
+index = dict()        #Empty dictionary
+file_titles = dict()  #Empty dictionary
 
 def create_index(filenames, index, file_titles):
-    """
-    This function is passed:
-        filenames:      a list of file names (strings)
 
-        index:          a dictionary mapping from terms to file names (i.e., inverted index)
-                        (term -> list of file names that contain that term)
+    file = open(filename, 'r')
 
-        file_titles:    a dictionary mapping from a file names to the title of the article
-                        in a given file
-                        (file name -> title of article in that file)
+    title = file.readline()
 
-    The function will update the index passed in to include the terms in the files
-    in the list filenames.  Also, the file_titles dictionary will be updated to
-    include files in the list of filenames.
+    title_edit = title.strip(string.punctuation)
 
-    >>> index = {}
-    >>> file_titles = {}
-    >>> create_index(['test1.txt'], index, file_titles)
-    >>> index
-    {'file': ['test1.txt'], '1': ['test1.txt'], 'title': ['test1.txt'], 'apple': ['test1.txt'], 'ball': ['test1.txt'], 'carrot': ['test1.txt']}
-    >>> file_titles
-    {'test1.txt': 'File 1 Title'}
-    >>> index = {}
-    >>> file_titles = {}
-    >>> create_index(['test2.txt'], index, file_titles)
-    >>> index
-    {'file': ['test2.txt'], '2': ['test2.txt'], 'title': ['test2.txt'], 'ball': ['test2.txt'], 'carrot': ['test2.txt'], 'dog': ['test2.txt']}
-    >>> file_titles
-    {'test2.txt': 'File 2 Title'}
-    >>> index = {}
-    >>> file_titles = {}
-    >>> create_index(['test1.txt', 'test2.txt'], index, file_titles)
-    >>> index
-    {'file': ['test1.txt', 'test2.txt'], '1': ['test1.txt'], 'title': ['test1.txt', 'test2.txt'], 'apple': ['test1.txt'], 'ball': ['test1.txt', 'test2.txt'], 'carrot': ['test1.txt', 'test2.txt'], '2': ['test2.txt'], 'dog': ['test2.txt']}
-    >>> index = {}
-    >>> file_titles = {}
-    >>> create_index(['test1.txt', 'test2.txt', 'test2.txt'], index, file_titles)
-    >>> index
-    {'file': ['test1.txt', 'test2.txt'], '1': ['test1.txt'], 'title': ['test1.txt', 'test2.txt'], 'apple': ['test1.txt'], 'ball': ['test1.txt', 'test2.txt'], 'carrot': ['test1.txt', 'test2.txt'], '2': ['test2.txt'], 'dog': ['test2.txt']}
-    >>> file_titles
-    {'test1.txt': 'File 1 Title', 'test2.txt': 'File 2 Title'}
-    >>> index = {'file': ['test1.txt'], '1': ['test1.txt'], 'title': ['test1.txt'], 'apple': ['test1.txt'], 'ball': ['test1.txt'], 'carrot': ['test1.txt']}
-    >>> file_titles = {'test1.txt': 'File 1 Title'}
-    >>> create_index([], index, file_titles)
-    >>> index
-    {'file': ['test1.txt'], '1': ['test1.txt'], 'title': ['test1.txt'], 'apple': ['test1.txt'], 'ball': ['test1.txt'], 'carrot': ['test1.txt']}
-    >>> file_titles
-    {'test1.txt': 'File 1 Title'}
-    """
-    pass
-    """
-    You implement this function.  Don't forget to remove the 'pass' statement above.
-    """
+    file_titles[filename] = title_edit
 
+    empty_lines_count = 0
+    
+    while(empty_lines_count < 2):
+
+        line = file.readline()
+
+        if len(line) == 0:
+            empty_lines_count += 1
+        else:
+            empty_lines_count = 0
+
+            list1 = line.split()
+
+            for word in list1:
+                term = word.strip(string.punctuation)
+                term = term.lower()
+
+                if term in index:
+                    index[term].append(filename)
+                else:
+                    index[term] = [filename]
+
+        if empty_lines_count == 2:
+            break
+            
 
 def search(index, query):
     """
